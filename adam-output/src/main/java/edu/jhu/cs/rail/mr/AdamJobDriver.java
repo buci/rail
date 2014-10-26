@@ -1,4 +1,4 @@
-package edu.jhu.cs.rail;
+package edu.jhu.cs.rail.mr;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
@@ -14,12 +14,13 @@ import parquet.hadoop.metadata.CompressionCodecName;
 
 import java.io.IOException;
 
+/**
+ * Entry-point for pipeline responsible for writing ADAM files containing RNA read info.
+ */
 public class AdamJobDriver extends Configured implements Tool {
 
-    public static String PARAM_MANIFEST_FILE = "manifest_file";
     public static String PARAM_INPUT_PATH = "input_path";
     public static String PARAM_OUTPUT_PATH = "output_path";
-
 
     public static void main(String[] args) throws Exception {
         int ret = ToolRunner.run(new Configuration(),
@@ -32,12 +33,20 @@ public class AdamJobDriver extends Configured implements Tool {
         return buildAndSubmit();
     }
 
+    /**
+     * This method build the job object, sets required configuration and launches the job.
+     * Blocking method (doesn't return unless job is finished).
+     *
+     * @return job's exit status
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws InterruptedException
+     */
     private int buildAndSubmit() throws IOException, ClassNotFoundException, InterruptedException {
         final Configuration conf = getConf();
         final Job job = new Job(conf);
         job.setJarByClass(getClass());
 
-        final String manifestFile = conf.get(PARAM_MANIFEST_FILE);
         final String inputPath = conf.get(PARAM_INPUT_PATH);
         final String outputPath = conf.get(PARAM_OUTPUT_PATH);
 
@@ -57,9 +66,9 @@ public class AdamJobDriver extends Configured implements Tool {
 
         job.setMapperClass(AdamJobMapper.class);
         job.setReducerClass(AdamJobReducer.class);
-        job.setNumReduceTasks(1);
+        job.setPartitionerClass(AdamLogPartitioner.class);
+        job.setNumReduceTasks(1); // TODO we might decide to read them from a file along with partitioning scheme.
 
         return job.waitForCompletion(true) ? 0 : 1;
-
     }
 }
