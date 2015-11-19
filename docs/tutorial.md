@@ -87,7 +87,7 @@ This is a Rail-RNA manifest file, and it is required for all Rail-RNA runs. Its 
 ```
 <FASTQ/FASTA URL 1>(tab)<URL 1 MD5 checksum or 0>(tab)<FASTQ/FASTA URL 2>(tab)<URL 2 MD5 checksum or 0>(tab)<sample label>
 ```
-. URLs can be on the local filesystem, on the web, or if the [AWS CLI](http://aws.amazon.com/cli/) is installed, on Amazon S3. If an input file is not on the local filesystem, it will be downloaded by Rail. Manifest files may be hosted remotely as well.
+. URLs can be on the local filesystem, on the web, or if the [AWS CLI](http://aws.amazon.com/cli/) is installed, on Amazon S3. If an input file is not on the local filesystem, it will be downloaded by Rail. Manifest files may be hosted remotely as well. Note that in versions <= 0.1.9c the _sample label_ has to include two hyphens as reported [here](https://github.com/nellore/rail/issues/30).
 
 Our Drosophila example is composed of two paired-end biological replicates, and the raw data is hosted at `http://verve.webfactional.com` . Let's create a new `railtests` directory in `testuser`'s home directory for running all our examples. 
 ```
