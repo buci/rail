@@ -750,7 +750,7 @@ def run_simulation(branding, json_config, force, memcap, num_processes,
         # Using IPython?
         if ipy:
             try:
-                from IPython.parallel import Client
+                from ipyparallel import Client
             except ImportError:
                 iface.fail('IPython is required to run Dooplicity\'s EMR '
                            'simulator in --ipy mode. Visit ipython.org to '

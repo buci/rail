@@ -1399,7 +1399,7 @@ def ipython_client(ipython_profile=None, ipcontroller_json=None):
     """
     errors = []
     try:
-        from IPython.parallel import Client
+        from ipyparallel import Client
     except ImportError:
         errors.append(
                    'IPython is required to run Rail-RNA in '
