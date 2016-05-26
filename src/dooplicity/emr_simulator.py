@@ -1061,6 +1061,12 @@ def run_simulation(branding, json_config, force, memcap, num_processes,
                 if archive:
                     archive_dir = destination_filename
                     destination_filename = os.path.basename(file_or_archive)
+                retries = 0
+                while not os.path.isfile(file_or_archive):
+                    if retries > 5:
+                        break
+                    time.sleep(10)
+                    retries += 1
                 if not os.path.isfile(file_or_archive):
                     iface.fail(('The file %s does not exist and thus cannot '
                                 'be cached.') % file_or_archive,
@@ -1418,6 +1424,12 @@ def run_simulation(branding, json_config, force, memcap, num_processes,
                 if archive:
                     archive_dir = destination_filename
                     destination_filename = os.path.basename(file_or_archive)
+                retries = 0
+                while not os.path.isfile(file_or_archive):
+                    if retries > 5:
+                        break
+                    time.sleep(10)
+                    retries += 1
                 if not os.path.isfile(file_or_archive):
                     iface.fail(('The file %s does not exist and thus cannot '
                                 'be cached.') % file_or_archive,
