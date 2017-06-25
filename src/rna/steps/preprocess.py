@@ -760,17 +760,17 @@ def go(nucleotides_per_input=8000000, gzip_output=True, gzip_level=3,
                         line_numbers = [i + 1 for i in line_numbers]
                         if any(is_none):
                             # TODO: better error handling
-                            print >> sys.stderr, 'Warning: some lines None at line numbers %s' % str(lines)
+                            print >>sys.stderr, 'Warning: some lines None at line numbers %s' % str(lines)
                             continue
                         lines = [line.strip() for line in lines]
                         lens = [len(line) for line in lines]
                         if sum(lens) == 0:
                             # TODO: better error handling
-                            print >> sys.stderr, 'Warning: all lines blank at line numbers %s' % str(lines)
+                            print >>sys.stderr, 'Warning: all lines blank at line numbers %s' % str(lines)
                             continue
                         if any([l == 0 for l in lens]):
                             # TODO: better error handling
-                            print >> sys.stderr, 'Warning: some blank at line numbers %s' % str(lines)
+                            print >>sys.stderr, 'Warning: some blank at line numbers %s' % str(lines)
                             continue
                         bad_record_skip = False
                         if lines[0][0] in fastq_cues:
